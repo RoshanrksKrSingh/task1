@@ -2,7 +2,7 @@
 
 This repository contains the backend API solution for the Node.js Intern Assessment (Task 1). The application is built using **Node.js**, **Express**, and the **MongoDB Native Driver** (without Mongoose), allowing for a flexible, schema-less architecture as per the requirements.
 
-## 🛠 Tech Stack
+## Tech Stack
 - **Runtime:** Node.js
 - **Framework:** Express.js
 - **Database:** MongoDB (Native Driver)
