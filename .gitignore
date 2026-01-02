@@ -1,16 +1,16 @@
-# Dependencies (Yeh bahut heavy hota hai, kabhi upload mat karna)
+
 node_modules/
 
-# Environment Variables (Isme password hai, ise safe rakho)
+
 .env
 
-# Uploaded Files (Test images ko git par nahi daalna chahiye)
+
 uploads/
 
-# System Files (Mac/Windows junk files)
+
 .DS_Store
 Thumbs.db
 
-# Logs
+
 npm-debug.log
 *.log

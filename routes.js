@@ -2,16 +2,16 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const { ObjectId } = require('mongodb'); // ObjectId chahiye unique ID ke liye
+const { ObjectId } = require('mongodb'); // ObjectId (unique ID)  
 
-// --- Multer Configuration (Image Uploads ke liye) ---
+// --- Multer Configuration (Image Uploads) ---
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        // Uploads folder mein save karega
+        //Save in Uploads folder  
         cb(null, 'uploads/');
     },
     filename: (req, file, cb) => {
-        // File ka naam unique banane ke liye timestamp add kar rahe hain
+        //For Unique File timestamp added
         const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname);
         cb(null, file.fieldname + '-' + uniqueName);
     }
@@ -21,7 +21,7 @@ const upload = multer({ storage: storage });
 
 // --- API Endpoints ---
 
-// 1. GET Events (By ID or Latest/Pagination)
+//  GET Events (By ID or Latest/Pagination)
 router.get('/api/v3/app/events', async (req, res) => {
     try {
         const collection = req.db.collection('events');
@@ -60,21 +60,21 @@ router.get('/api/v3/app/events', async (req, res) => {
     }
 });
 
-// 2. POST Create Event
-// Note: Frontend se field name "files[image]" aayega as per requirement
+//  POST Create Event
+// Note: Frontend se field name "files[image]"  as per requirement
 router.post('/api/v3/app/events', upload.single('files[image]'), async (req, res) => {
     try {
         const collection = req.db.collection('events');
         
-        // Data model create karna (Requirement ke hisaab se)
+        // Data model create  (As per Requirement)
         const newEvent = {
             type: "event",
-            uid: req.body.uid ? parseInt(req.body.uid) : 18, // Default 18 agar nahi bheja
+            uid: req.body.uid ? parseInt(req.body.uid) : 18, // Default 18 if not sending
             name: req.body.name,
             tagline: req.body.tagline,
-            schedule: new Date(req.body.schedule), // Date object mein convert kiya
+            schedule: new Date(req.body.schedule), // Date to object  converted
             description: req.body.description,
-            // Agar file upload hui hai toh uska path save karo
+            // If file is not uploaded so save his path 
             files: req.file ? { image: req.file.path } : null,
             moderator: req.body.moderator,
             category: req.body.category,
@@ -94,7 +94,7 @@ router.post('/api/v3/app/events', upload.single('files[image]'), async (req, res
     }
 });
 
-// 3. PUT Update Event
+//  PUT Update Event
 router.put('/api/v3/app/events/:id', upload.single('files[image]'), async (req, res) => {
     try {
         const collection = req.db.collection('events');
@@ -126,7 +126,7 @@ router.put('/api/v3/app/events/:id', upload.single('files[image]'), async (req, 
     }
 });
 
-// 4. DELETE Event
+//  DELETE Event
 router.delete('/api/v3/app/events/:id', async (req, res) => {
     try {
         const collection = req.db.collection('events');
